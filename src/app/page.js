@@ -199,7 +199,7 @@ export default function Home() {
           {loadingCategoryMovies || loadingRecent
             ? "Cargando películas..."
             : isScrolling
-            ? "Buscando..."
+            ? "Buscando...."
             : "Comenzar ahora!"}
         </button>
         )}

@@ -24,13 +24,11 @@ export default function Home() {
     error: errorCategory,
   } = useMoviesByCategory(selectedCategory);
 
-
   const handleCheckboxChange = (categoryId) => {
-    setSelectedCategory(categoryId); 
-    setRandomMovie(null); 
+    setSelectedCategory(categoryId);
+    setRandomMovie(null);
   };
 
-  
   const handleGetRandomMovie = () => {
     const moviesToChooseFrom = selectedCategory ? categoryMovies : recentMovies;
     if (moviesToChooseFrom.length === 0) {
@@ -44,15 +42,14 @@ export default function Home() {
     if (container) {
       let scrollAmount = 0;
       const slideTimer = setInterval(() => {
-        container.scrollBy(65, 0); 
+        container.scrollBy(65, 0);
         scrollAmount += 65;
         if (scrollAmount >= container.scrollWidth - container.clientWidth) {
           clearInterval(slideTimer);
         }
-      }, 65); 
+      }, 65);
     }
 
-    
     setTimeout(() => {
       const movie = getRandomMovie(moviesToChooseFrom);
       setRandomMovie(movie);
@@ -75,12 +72,13 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <Image src="/logo.svg" alt="logo" width={200} height={70} />
+        <section className={styles.header}>
+          <Image src="/logo.svg" alt="logo" width={200} height={70} />
+          <h1>¿Qué película vamos a ver hoy?</h1>
+        </section>
         <div className={styles.containerBg}>
-          <Image src="/texture.svg" alt="logo" fill={true}/>
+          <Image src="/texture.svg" alt="logo" fill={true} />
         </div>
-        <h1>¿Qué película vamos a ver hoy?</h1>
-
         {loadingCategories ? (
           <p>Cargando categorías...</p>
         ) : (
@@ -173,35 +171,37 @@ export default function Home() {
                         }
                       />
                     </div>
-                  )
+                  ),
                 )}
               </section>
             )}
           </div>
         )}
-
         {randomMovie && (
-          <button onClick={() => setRandomMovie(null)} className={styles.buttonBack}>
+          <button
+            onClick={() => setRandomMovie(null)}
+            className={styles.buttonBack}
+          >
             Nueva busqueda
           </button>
         )}
         {!randomMovie && (
-        <button
-          onClick={handleGetRandomMovie}
-          disabled={
-            loadingCategoryMovies ||
-            loadingRecent ||
-            isScrolling ||
-            (!categoryMovies.length && !recentMovies.length)
-          }
-          className={styles.buttonSend}
-        >
-          {loadingCategoryMovies || loadingRecent
-            ? "Cargando películas..."
-            : isScrolling
-            ? "Buscando..."
-            : "Comenzar ahora!"}
-        </button>
+          <button
+            onClick={handleGetRandomMovie}
+            disabled={
+              loadingCategoryMovies ||
+              loadingRecent ||
+              isScrolling ||
+              (!categoryMovies.length && !recentMovies.length)
+            }
+            className={styles.buttonSend}
+          >
+            {loadingCategoryMovies || loadingRecent
+              ? "Cargando películas..."
+              : isScrolling
+                ? "Buscando..."
+                : "Comenzar ahora!"}
+          </button>
         )}
         {errorRecent && <p>{errorRecent}</p>}
         {errorCategory && <p>{errorCategory}</p>}
